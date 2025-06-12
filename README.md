@@ -150,7 +150,7 @@ git checkout develop
 git pull origin develop
 
 # Option A : Cherry-pick (récupère le commit exact)
-git cherry-pick <sha-du-commit-hotfix>
+git cherry-pick <sha-du-commit-hotfix> # commit ajouter et push dans main
 git push origin develop
 
 # Option B : Merge squash
