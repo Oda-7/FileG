@@ -1,6 +1,6 @@
 # gitWorkflow
 
-# 🧩 Git Workflow – Guide Complet pour Projet Solo
+# 🧩 Git Workflow – Guide Complet 
 
 ## 📁 Structure des Branches
 
@@ -13,30 +13,50 @@
 | `hotfix/*`   | Correction de **bug urgent** en production    |
 | `release/*`  | *(optionnel)* Préparation d'une **version**   |
 
+## 🛡️ Protection des Branches
+
+**Important :** Les branches `main` et `develop` sont protégées et ne peuvent pas être modifiées directement via `git push` ou `git merge`. Toutes les modifications doivent passer par des Pull Requests (PR) sur GitHub.
+
+---
+
+### Configuration GitHub recommandée :
+- ✅ Exiger une review de PR avant merge
+- ✅ Invalider les anciennes reviews si nouveaux commits
+- ✅ Bloquer le merge si les tests/CI échouent
+- ✅ Forcer la mise à jour avant merge
+
 ---
 
 ## 🧠 Règles de Fusion (Clean Commit History)
 
-| Source       | Cible    | Type                  | Méthode recommandée               |
-|--------------|----------|-----------------------|------------------------------------|
-| `feature/*`  | develop  | Squash                | ✅ PR avec "Squash and Merge" ou `merge --squash` |
-| `fix/*`      | develop  | Squash                | ✅ PR avec "Squash and Merge" ou `merge --squash` |
-| `hotfix/*`   | main     | Squash                | ✅ PR "Squash and Merge" ou `merge --squash` |
-| `hotfix/*`   | develop  | Squash ou Cherry-pick | 🔁 `merge --squash` ou `git cherry-pick` |
-| `develop`    | main     | Fast-forward          | `git merge --ff` ou PR classique   |
+| Source | Cible | Type | Méthode recommandée |
+|--------|-------|------|-------------------|
+| `feature/*` | `develop` | Squash | ✅ PR avec "Squash and Merge" |
+| `fix/*` | `develop` | Squash | ✅ PR avec "Squash and Merge" |
+| `hotfix/*` | `main` | Squash | ✅ PR avec "Squash and Merge" (URGENT) |
+| `hotfix/*` | `develop` | Squash ou Cherry-pick | 🔁 PR "Squash and Merge" ou cherry-pick après fusion |
+| `develop` | `main` | Fast-forward | ✅ PR classique (Create a merge commit) |
+
+### 🔥 Spécificité Hotfix
+**Les hotfix doivent aller sur DEUX branches :**
+1. **Main d'abord** → Fix immédiat en production
+2. **Develop ensuite** → Éviter la régression future
+
+
 
 ---
 
 ## 🚀 Configuration Initiale
 
-### Créer la branche `develop` à partir de `main`
+### Créer la branche develop à partir de main
 
 ```bash
 git checkout -b develop main
 git push -u origin develop
 ```
 
-### Recréer `develop` à partir de `main` (⚠️ Attention : remplace complètement l'ancienne develop)
+### Recréer develop à partir de main ⚠️
+**Attention :** Cette commande remplace complètement l'ancienne develop
 
 ```bash
 git checkout main
@@ -65,19 +85,44 @@ git commit -m "feat: ajout du thème happy"
 git push origin feature/theme-happy
 ```
 
-### 🔄 Fusionner la feature dans `develop`
+### 🔄 Fusionner la feature dans develop via PR
 
+1. **Créer une Pull Request** sur GitHub :
+   
+   - Source : `feature/theme-happy`
+   - Cible : `develop`
+   - Type : **Squash and Merge**
+
+2. **Après fusion de la PR**, nettoyer localement :
+   
 ```bash
-# 4. Fusionner avec squash (historique propre)
+# Mettre à jour develop
 git checkout develop
 git pull origin develop
-git merge --squash feature/theme-happy
-git commit -m "feat: ajout du thème happy"
-git push origin develop
 
-# 5. Supprimer la branche feature
+# Supprimer la branche feature locale
 git branch -d feature/theme-happy
-git push origin --delete feature/theme-happy
+
+# La branche remote est automatiquement supprimée par GitHub si configuré
+```
+
+### 🔄 Fusionner le fix dans develop via PR
+
+1. **Créer une Pull Request** sur GitHub :
+   
+   - Source : `fix/form-validation`
+   - Cible : `develop`
+   - Type : **Squash and Merge**
+
+2. **Après fusion de la PR**
+   
+```bash
+# Mettre à jour develop
+git checkout develop
+git pull origin develop
+
+# Supprimer la branche fix
+git branch -d fix/form-validation
 ```
 
 ---
@@ -98,22 +143,30 @@ git checkout -b fix/form-validation
 git add .
 git commit -m "fix: validation du formulaire"
 git push origin fix/form-validation
+```
 
-# 4. Fusionner dans develop
+### 🔄 Fusionner le fix dans develop via PR
+
+1. **Créer une Pull Request** sur GitHub :
+   
+   - Source : `fix/form-validation`
+   - Cible : `develop`
+   - Type : **Squash and Merge**
+
+2. **Après fusion de la PR** :
+   
+```bash
+# Mettre à jour develop
 git checkout develop
 git pull origin develop
-git merge --squash fix/form-validation
-git commit -m "fix: validation du formulaire"
-git push origin develop
 
-# 5. Supprimer la branche fix
+# Supprimer la branche fix
 git branch -d fix/form-validation
-git push origin --delete fix/form-validation
 ```
 
 ---
 
-## 🔥 Cycle Complet d'un Hotfix (`hotfix/*`)
+## 🔥 Cycle Complet d'un Hotfix (`hotfix/*`) - DOUBLE APPLICATION
 
 ### ⚡ Corriger un bug urgent en production
 
@@ -131,52 +184,68 @@ git commit -m "hotfix: crash header sur mobile"
 git push origin hotfix/header-crash
 ```
 
-### 🔄 Appliquer le hotfix dans `main`
+### 🔄 ÉTAPE 1 : Appliquer le hotfix dans main (URGENT)
 
+1. **Créer une Pull Request** sur GitHub :
+   
+   - Source : `hotfix/header-crash`
+   - Cible : `main`
+   - Type : **Squash and Merge**
+   - **Priorité : URGENT** 🚨
+
+2. **Après fusion dans main** :
+   
 ```bash
-# 4. Fusionner dans main avec squash
 git checkout main
 git pull origin main
-git merge --squash hotfix/header-crash
-git commit -m "hotfix: crash header sur mobile"
-git push origin main
+# 🚀 Déploiement immédiat en production
 ```
 
-### 🔄 Appliquer le hotfix dans `develop`
+### 🔄 ÉTAPE 2 : Appliquer le hotfix dans develop
+
+**Option A : Via Pull Request (recommandé si la branche existe encore)**
+
+1. Créer une PR de `hotfix/header-crash` vers `develop`
+2. Type : **Squash and Merge**
+
+**Option B : Cherry-pick manuel (si la branche hotfix est supprimée)**
 
 ```bash
-# 5. Appliquer aussi dans develop (cherry-pick ou squash)
+# 1. Récupérer le SHA du commit de hotfix dans main
+git log --oneline main -n 5
+# Exemple : abc1234 hotfix: crash header sur mobile
+
+# 2. Appliquer dans develop
 git checkout develop
 git pull origin develop
-
-# Option A : Cherry-pick (récupère le commit exact)
-git cherry-pick <sha-du-commit-hotfix> # commit ajouter et push dans main
+git cherry-pick abc1234
 git push origin develop
+```
 
-# Option B : Merge squash
-git merge --squash hotfix/header-crash
-git commit -m "hotfix: crash header sur mobile"
-git push origin develop
+### 🧹 Nettoyage final
 
-# 6. Supprimer la branche hotfix
+```bash
+# Supprimer la branche hotfix locale
 git branch -d hotfix/header-crash
-git push origin --delete hotfix/header-crash
 ```
 
 ---
 
 ## 📦 Déploiement en Production
 
-### 🚀 Fusionner `develop` dans `main`
+1. **Créer une Pull Request** sur GitHub :
+   
+   - Source : `develop`
+   - Cible : `main`
+   - Type : **Create a merge commit** (pour conserver l'historique)
 
+2. **Après fusion**, tagger la version (optionnel) :
+   
 ```bash
-# Quand develop est stable et prêt
 git checkout main
 git pull origin main
-git merge develop  # ou git merge --ff develop
-git push origin main
 
-# Tag optionnel pour marquer la version
+# Tag pour marquer la version
 git tag -a v1.2.0 -m "Release version 1.2.0"
 git push origin v1.2.0
 ```
@@ -202,9 +271,9 @@ git push origin develop
 
 ### Cas d'usage courants
 
-- Appliquer un hotfix de `main` vers `develop`
-- Récupérer un commit spécifique d'une feature
-- Appliquer un fix critique sans merger toute la branche
+- ✅ Appliquer un hotfix de `main` vers `develop`
+- ✅ Récupérer un commit spécifique d'une feature
+- ✅ Appliquer un fix critique sans merger toute la branche
 
 ---
 
@@ -213,7 +282,7 @@ git push origin develop
 ### Messages de Commit
 
 ```bash
-# Format recommandé
+# Format recommandé (Conventional Commits)
 feat: nouvelle fonctionnalité
 fix: correction de bug
 hotfix: correction urgente
@@ -221,11 +290,12 @@ docs: mise à jour documentation
 style: formatage du code
 refactor: refactorisation
 test: ajout de tests
+chore: tâches de maintenance
 ```
 
-### Nettoyage des Branches Bash
+### Nettoyage des Branches (PowerShell)
 
-```bash
+```powershell
 # Supprimer les branches locales fusionnées
 $branches = git for-each-ref --format='%(refname:short)' refs/heads/ |
     Where-Object { $_ -notin @('main', 'develop') }
@@ -242,8 +312,10 @@ foreach ($branch in $branches) {
 
 # Supprimer les références aux branches supprimées sur le remote
 git remote prune origin
+```mote prune origin
 ```
-### Nettoyage des Branches Bash
+
+### Nettoyage des Branches (Bash)
 
 ```bash
 for branch in $(git for-each-ref --format='%(refname:short)' refs/heads/ | grep -vE '^(main|develop)$'); do
@@ -254,6 +326,9 @@ for branch in $(git for-each-ref --format='%(refname:short)' refs/heads/ | grep 
     git branch -d "$branch"
   fi
 done
+
+# Supprimer les références aux branches supprimées sur le remote
+git remote prune origin
 ```
 
 ### Synchronisation
@@ -263,10 +338,9 @@ done
 git checkout develop
 git pull origin develop
 
-# Toujours pull avant de fusionner
+# Toujours pull avant de fusionner (pour les cherry-picks)
 git checkout develop
 git pull origin develop
-git merge --squash feature/ma-feature
 ```
 
 ---
@@ -278,7 +352,32 @@ git merge --squash feature/ma-feature
 | Créer une feature | `git checkout -b feature/nom develop` |
 | Créer un fix | `git checkout -b fix/nom develop` |
 | Créer un hotfix | `git checkout -b hotfix/nom main` |
-| Squash merge | `git merge --squash branche` |
 | Cherry-pick | `git cherry-pick <sha>` |
-| Supprimer branche | `git branch -d nom && git push origin --delete nom` |
-| Deploy production | `git checkout main && git merge develop` |
+| Supprimer branche locale | `git branch -d nom` |
+| Nettoyer références remote | `git remote prune origin` |
+| Voir l'historique | `git log --oneline` |
+
+## 🔄 Workflow avec Pull Requests - Résumé
+
+### Processus Standard
+
+1. **Développement** : Créer une branche → Développer → Push
+2. **Integration** : Créer PR → Review → Merge via GitHub
+3. **Nettoyage** : Pull les changements → Supprimer branche locale
+
+### Processus Hotfix (Spécial)
+
+1. **Développement** : Créer hotfix → Corriger → Push
+2. **Production** : PR vers `main` → Merge URGENT → Déploiement
+3. **Develop** : PR vers `develop` OU Cherry-pick
+4. **Nettoyage** : Supprimer branche locale
+
+## ⚡ Règles d'Or
+
+- 🚫 **Jamais de `git push` direct** sur `main` ou `develop`
+- ✅ **Toujours passer par les Pull Requests**
+- 🔄 **Hotfix = Double application** (`main` + `develop`)
+- 🧹 **Nettoyer ses branches** après fusion
+- 📝 **Messages de commit clairs** (Conventional Commits)
+
+---
