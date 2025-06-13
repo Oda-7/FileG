@@ -227,7 +227,7 @@ test: ajout de tests
 
 ```bash
 # Supprimer les branches locales fusionnées
-git branch --merged | grep -v "\*\|main\|develop" | xargs -n 1 git branch -d
+git branch --merged | Where-Object { $_ -notmatch '\*|main|develop' } | ForEach-Object { git branch -d $_.Trim() }
 
 # Supprimer les références aux branches supprimées sur le remote
 git remote prune origin
