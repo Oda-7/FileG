@@ -223,7 +223,7 @@ refactor: refactorisation
 test: ajout de tests
 ```
 
-### Nettoyage des Branches
+### Nettoyage des Branches Bash
 
 ```bash
 # Supprimer les branches locales fusionnées
@@ -231,6 +231,18 @@ git branch --merged | Where-Object { $_ -notmatch '\*|main|develop' } | ForEach-
 
 # Supprimer les références aux branches supprimées sur le remote
 git remote prune origin
+```
+### Nettoyage des Branches Bash
+
+```bash
+for branch in $(git for-each-ref --format='%(refname:short)' refs/heads/ | grep -vE '^(main|develop)$'); do
+  git merge-base --is-ancestor "$branch" main && \
+  git merge-base --is-ancestor "$branch" develop
+  if [ $? -eq 0 ]; then
+    echo "Deleting merged branch: $branch"
+    git branch -d "$branch"
+  fi
+done
 ```
 
 ### Synchronisation
