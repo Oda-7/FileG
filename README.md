@@ -227,7 +227,18 @@ test: ajout de tests
 
 ```bash
 # Supprimer les branches locales fusionnées
-git branch --merged | Where-Object { $_ -notmatch '\*|main|develop' } | ForEach-Object { git branch -d $_.Trim() }
+$branches = git for-each-ref --format='%(refname:short)' refs/heads/ |
+    Where-Object { $_ -notin @('main', 'develop') }
+
+foreach ($branch in $branches) {
+    $mergedInMain = git merge-base --is-ancestor $branch main
+    $mergedInDevelop = git merge-base --is-ancestor $branch develop
+
+    if ($LASTEXITCODE -eq 0 -and $mergedInDevelop -eq $true) {
+        Write-Host "Deleting merged branch: $branch"
+        git branch -d $branch
+    }
+}
 
 # Supprimer les références aux branches supprimées sur le remote
 git remote prune origin
