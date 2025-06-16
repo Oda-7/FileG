@@ -356,8 +356,7 @@ git pull origin develop
 | Supprimer branche locale | `git branch -d nom` |
 | Nettoyer références remote | `git remote prune origin` |
 | Voir l'historique | `git log --oneline` |
-| Supprimer localement et distant | `git branch -d <nom_de_branche> && git push origin --delete <nom_de_branche>
-`|
+| Supprimer localement et distant | `git branch -d <nom_de_branche> && git push origin --delete <nom_de_branche>`|
 
 ## 🔄 Workflow avec Pull Requests - Résumé
 
