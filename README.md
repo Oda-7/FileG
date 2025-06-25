@@ -358,6 +358,9 @@ git pull origin develop
 | Voir l'historique | `git log --oneline` |
 | Supprimer localement et distant | `git branch -d <nom_de_branche>; git push origin --delete <nom_de_branche>`|
 | Supprime toute les branches local qui sont inexistante sur le distant | `git fetch -p`|
+| Compare les branches distantes avec les branches locals (": gone" signifie que la branche distante n'existe plus) | `git branch -vv`|
+
+
 
 
 ## 🔄 Workflow avec Pull Requests - Résumé
