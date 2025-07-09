@@ -359,6 +359,9 @@ git pull origin develop
 | Supprimer localement et distant | `git branch -d <nom_de_branche>; git push origin --delete <nom_de_branche>`|
 | Supprime toute les branches local qui sont inexistante sur le distant | `git fetch -p`|
 | Compare les branches distantes avec les branches locals (": gone" signifie que la branche distante n'existe plus) | `git branch -vv`|
+| Forcer la branche local à être identique à la branche distante |`git reset --hard origin/feature/theme-happy`|
+| Pendant un merge, revenir à l'état avant le merge/pull |`git merge --abort`|
+| Réinitialise la branche local au dernier commit |`git reset --hard HEAD`|
 
 
 
