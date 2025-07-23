@@ -360,8 +360,9 @@ git pull origin develop
 | Supprime toute les branches local qui sont inexistante sur le distant | `git fetch -p`|
 | Compare les branches distantes avec les branches locals (": gone" signifie que la branche distante n'existe plus) | `git branch -vv`|
 | Forcer la branche local à être identique à la branche distante |`git reset --hard origin/feature/theme-happy`|
-| Pendant un merge, revenir à l'état avant le merge/pull |`git merge --abort`|
-| Réinitialise la branche local au dernier commit |`git reset --hard HEAD`|
+| Pendant un merge, revenir à l'état avant le merge/pull | `git merge --abort`|
+| Réinitialise la branche local au dernier commit | `git reset --hard HEAD` |
+| Remplace complètement ton état local avec la branche 'feature' | `git reset --hard origin/feature/<nom de la branche>` |
 | Ramène-moi le contenu de <branch> dans ce répertoire, mais reste sur la branche actuelle. (-- : sépare les noms de fichiers ou répertoires des options ou de la branche. Ici, c’est obligatoire pour que Git comprenne qu’on veut prendre des fichiers depuis <branch>, '.' : le répertoire courant) | `git checkout <branche> -- .` |
 
 
