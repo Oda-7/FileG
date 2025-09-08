@@ -166,8 +166,7 @@ git branch -d fix/form-validation
 
 ---
 
-## 🔥 Cycle Complet d'un Hotfix (`hotfix/*`) - DOUBLE APPLICATION
-
+## 🔥 Cycle Complet d'un Hotfix (`hotfix/*`) - TRIPLE OPTION
 ### ⚡ Corriger un bug urgent en production
 
 ```bash
@@ -221,6 +220,76 @@ git pull origin develop
 git cherry-pick abc1234
 git push origin develop
 ```
+
+**Avantages :**
+- ✅ Contrôle précis sur les commits à appliquer
+- ✅ Historique propre dans develop
+- ✅ Idéal pour 1 ou 2 commits spécifiques
+
+**Inconvénients**
+- ❌ Créé de nouveaux SHA (commits dupliqués)
+- ❌ Plus de travail manuel
+
+**Option C : Rebase (Replay - Pour historique linéaire)**
+
+```bash
+git checkout develop
+git pull origin develop
+
+# 3. Rebase les commits du hotfix sur develop
+git rebase main 
+git push origin develop
+```
+
+### Avantages
+- ✅ Conserve l'historique linéaire
+- ✅ Pas de commits dupliqués
+- ✅ Les SHA originaux sont préservés dans l'ordre chronologique
+
+### Inconvénients
+- ❌ Plus complexe en cas de conflits
+- ❌ Peut réécrire l'historique si mal utilisé
+- ❌ Nécessite une bonne compréhension du rebase
+
+**Option D : Rebase (Replay - Pour historique linéaire)**
+
+```bash
+# 1. S'assurer que develop est à jour
+git checkout develop
+git pull origin develop
+
+# 2. Créer une branche temporaire depuis develop
+git checkout -b temp-hotfix-rebase
+
+# 3. Rebase les commits du hotfix sur develop
+git rebase main temp-hotfix-rebase
+
+# 4. Vérifier que tout est correct
+git log --oneline
+
+# 5. Fast-forward develop avec les nouveaux commits
+git checkout develop
+git merge temp-hotfix-rebase
+
+# 6. Pousser develop
+git push origin develop
+
+# 7. Nettoyer la branche temporaire
+git branch -d temp-hotfix-rebase
+```
+
+### Avantages
+
+- ✅ Conserve l'historique linéaire
+- ✅ Pas de commits dupliqués
+- ✅ Les SHA originaux sont préservés dans l'ordre chronologique
+
+### Avantages
+
+- ❌ Plus complexe en cas de conflits
+- ❌ Peut réécrire l'historique si mal utilisé
+- ❌ Nécessite une bonne compréhension du rebase
+  
 
 ### 🧹 Nettoyage final
 
