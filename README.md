@@ -9,6 +9,7 @@
 | Initialiser un projet | `git init`|
 | Indexé le projet / Indexé le fichier / Indexer les fichier .ts du dossier | `git add . / git add <file> / git add Dossier/\*.ts` |
 | Voir tous les fichier qui seront commités| `git status`|
+| Retirer les fichiers du suivie | `git rm --cached -r .` |
 | Créer un commit et ajouter un message de commit | `git commit -m "message du commit"` |
 | Modifier le dernier commit avant de push pour y ajouter des changement | `git add . ` `git commit --amend` |
 | Lister la liste des fichiers suivie | `git ls-files --cached`|
