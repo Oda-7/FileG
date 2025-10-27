@@ -2,6 +2,90 @@
 
 # 🧩 Git Workflow – Guide Complet 
 
+## 📝 Configuration .gitconfig 
+
+### Emplacement du fichier Windows
+C:\Users\TON_UTILISATEUR\.gitconfig
+
+### Emplacement du fichier Mac
+~/.gitconfig
+
+```.gitconfig
+# Identité
+[user]
+	email = toma.cimino@hotmail.fr
+	name = Thomas Cimino
+# Configuration globale 
+[core]
+	editor = \"C:\\Users\\Thomas\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\code\" --wait
+	excludesfile = ~/.gitignore  # Fichier global d'exclusions
+    autocrlf = input # Gestion des fins de ligne
+   	conflictstyle = zdiff3 # Style de résolution des conflits
+   	#  sshCommand = ssh -i ~/.ssh/id_rsa # Clé SSH personnalisée
+
+# Initialisation des repos
+[init] 
+   defaultBranch = main # Branche par défaut identique à github
+
+[color]
+	ui = auto # Couleurs automatiques dans le terminal
+[column]
+    ui = auto # Affichage en colonnes automatique
+[branch]
+	sort = -committerdate # Tri des branches par date de commit
+[tag]
+    sort = version:refname # Tri des tags par version
+
+# Configuration des différences et des fusions 
+[diff] 
+   algorithm = histogram # Algorithme de diff
+   colorMoved = plain # Couleur des lignes déplacées
+   mnemonicPrefix = true # Ajoute des préfixes pour mieux comprendre les diffs.
+   renames = true # Détection des renommages
+
+# Configuration des actions de pull/push/fetch
+[push]
+   default = simple # Comportement par défaut du push
+   autoSetupRemote = true # Configuration automatique du remote
+   followTags = true # Pousser les tags associés
+[fetch]
+   prune = true # Nettoyage des branches supprimées
+   pruneTags = true # Nettoyage des tags supprimés
+   all = true # Récupérer tous les remotes
+[pull]
+   rebase = false # Utiliser merge par défaut
+
+# Configuration avancée des conflits et du rebase
+[rerere]
+   enabled = true # Réutilisation des résolutions de conflits
+   autoupdate = true # Mise à jour automatique des résolutions
+[rebase]
+   autoSquash = true  # Squash automatique des commits
+   autoStash = true # Stash automatique avant rebase
+   updateRefs = true # Mise à jour des références après rebase
+
+# Configuration de l’aide et de l’édition des commits
+[help]
+   autocorrect = prompt  # Correction automatique avec confirmation
+[commit]
+   verbose = true # Affichage des modifications dans l'éditeur de commit
+
+# Alias
+[alias]
+  co = checkout
+  br = branch
+  cm = commit
+  st = status
+  lg = log --oneline --graph --all --decorate
+  unstage = reset HEAD -- # retire des fichiers du staging
+  last = log -1 HEAD
+
+#  example: pour afficher les logs de manière graphique
+#  git lg
+```
+
+---
+
 ## 🎯 Résumé des Commandes Essentielles
 
 | Action | Commande |
