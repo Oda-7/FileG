@@ -21,6 +21,7 @@ C:\Users\TON_UTILISATEUR\.gitconfig
 	excludesfile = ~/.gitignore  # Fichier global d'exclusions
     autocrlf = input # Gestion des fins de ligne
    	conflictstyle = zdiff3 # Style de résolution des conflits
+	ignorecase = false
    	#  sshCommand = ssh -i ~/.ssh/id_rsa # Clé SSH personnalisée
 
 # Initialisation des repos
@@ -97,6 +98,7 @@ C:\Users\TON_UTILISATEUR\.gitconfig
 | Créer un commit et ajouter un message de commit | `git commit -m "message du commit"` |
 | Modifier le dernier commit avant de push pour y ajouter des changement | `git add . ` `git commit --amend` |
 | Lister la liste des fichiers suivie | `git ls-files --cached`|
+| Supprimer le ou les fichier du suivie | `git rm -r --cached <src/file ou file>`|
 | Mettre les modification d'une branche de coté, rajouter le flag -u pour les fichier non suivie | `git stash -u save "description"` | 
 | Pousser sur le dépot distant (creation de la branche, '-u' tracking de la branch ajouter), une fois le suivie de branche ajouter il suffit de faire la commande git push ou git pull  | `git push -u origin <branch>` |
 | Récupère et fusionne les changement distant | `git pull origin <branch>` |
