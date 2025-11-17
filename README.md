@@ -21,7 +21,7 @@ C:\Users\TON_UTILISATEUR\.gitconfig
 	excludesfile = ~/.gitignore  # Fichier global d'exclusions
     autocrlf = input # Gestion des fins de ligne
    	conflictstyle = zdiff3 # Style de résolution des conflits
-	ignorecase = false
+	ignorecase = false # Ne pas ignorer la casse des fichiers pour Git. Supprimer manuellement les doublons, car c’est un problème lié au système d’exploitation et à Git.
    	#  sshCommand = ssh -i ~/.ssh/id_rsa # Clé SSH personnalisée
 
 # Initialisation des repos
