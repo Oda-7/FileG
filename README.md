@@ -107,7 +107,7 @@ C:\Users\TON_UTILISATEUR\.gitconfig
 | Créer une branche | `git checkout -b <branch>` |
 | Changer de branche | `git switch <branch>` |
 | Supprimer branche locale | `git branch -d <name-branch>` |
-| Compare les branches distantes avec les branches locals (": gone" signifie que la branche distante n'existe plus) | `git branch -vv`|
+| Compare les branches distantes avec les branches locals (": gone" signifie que la branche distante n'existe plus) | `git branch -vv / git branch -vv | Select-String ": gone]"`|
 | Forcer la branche local à être identique à la branche distante |`git reset --hard origin/feature/theme-happy`|
 | Récupère la mise a jour des branche distante et supprime les branche supprimer sur github | `git fetch -p`|
 | Nettoyer les branche supprimer sur github | `git remote prune origin` |
