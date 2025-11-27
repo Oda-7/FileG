@@ -113,12 +113,16 @@ C:\Users\TON_UTILISATEUR\.gitconfig
 | Nettoyer les branche supprimer sur github | `git remote prune origin` |
 | Supprimer localement et distant | `git branch -d <nom_de_branche>; git push origin --delete <nom_de_branche>`|
 | Voir l'historique | `git log` |
-| Voir l'historique en couleur, avec la date,chaque commit sera sur une ligne | `git log --graph --all --decorate --pretty=format:'%C(yellow)%h%C(reset) %C(green)%ad%C(reset) | %C(red)%d%C(reset) %s %C(bold blue)<%an>%C(reset)' --date=short` |
+| Voir l'historique en couleur, avec la date,chaque commit sera sur une ligne | `git log --graph --all --decorate --pretty=format:'%C(yellow)%h%C(reset) %C(green)%ad%C(reset) \| %C(red)%d%C(reset) %s %C(bold blue)<%an>%C(reset)' --date=short` |
 | Annuler un commit déjà poussé sans réecrire l'historique et permet au autres utilisateur d'avoir les modification lors du prochain pull ou fetch | `git revert <hash-commit>` |
 | Pendant un merge, revenir à l'état avant le merge/pull | `git merge --abort`|
 | Réinitialise la branche local au dernier commit | `git reset --hard HEAD` |
 | Remplace complètement ton état local avec la branche distante | `git reset --hard origin/feature/<nom de la branche>` |
 | Prend tous les fichiers commit sur la branche et les ajoute sur la branche courante ( -- : obligatoire pour que git comprenne que l'on veut prendre les fichier de la branch, . : le réperertoire courante ) |  `git checkout <branche> -- .` |
+
+<img width="632" height="50" alt="image" src="https://github.com/user-attachments/assets/30c6d4bb-df5f-40f5-9dd1-e9d977cd02fd" />
+<img width="572" height="36" alt="image" src="https://github.com/user-attachments/assets/28ac0168-286b-477b-8f7b-36139a5cc388" />
+
 
 
 ## 📁 Structure des Branches
