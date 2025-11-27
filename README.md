@@ -155,8 +155,8 @@ chore: tâches de maintenance
 ```
 
 ```Bash
-git commit -m" <type> ( <portée facultative> ): <description> " \
-  -m" <corps facultatif> " \
+git commit -m" <type> ( <portée facultative> ): <description> " `
+  -m" <corps facultatif> " `
   -m" <pied de page facultatif> "
 ```
 
@@ -164,8 +164,8 @@ Exemple :
 
 ```Bash
 
-git commit -m"feat!: remove ticket list endpoint" \
-  -m"refers to JIRA-1337" \
+git commit -m"feat!: remove ticket list endpoint" `
+  -m"refers to JIRA-1337" `
   -m"BREAKING CHANGE: ticket endpoints no longer supports list all entities."
 ```
 
